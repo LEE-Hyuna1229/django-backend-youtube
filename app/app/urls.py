@@ -20,3 +20,5 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+# docker-compose run --rm app sh -c 'python manage.py migrate'
