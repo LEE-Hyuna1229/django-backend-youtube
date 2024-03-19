@@ -79,3 +79,8 @@ Noti -> User, User (X)
 
 ### Custom User Model Create
 - TDD => 개발 및 디버깅 시간을 엄청나게 줄일 수 있습니다. PDB(Python Debugger)
+
+# DRF 세팅
+- DjangoRestframework
+- drf-spectacular / swaggur-ui, redoc / requirements.txt 추가
+- docker-compose build
