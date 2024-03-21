@@ -31,7 +31,8 @@ urlpatterns = [
     # Redoc: 기획자나 비개발자분들이 결과물 확인시 사용
     path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
     # REST API
-    path('api/v1/video/', include('videos.urls'))
+    path('api/v1/video/', include('videos.urls')),
+    path('api/v1/sub/', include('subscriptions.urls'))
 ]
 
 # docker-compose run --rm app sh -c 'python manage.py migrate'
