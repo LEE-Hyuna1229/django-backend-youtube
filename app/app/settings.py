@@ -20,12 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gqz)v*=+2^^le&$j2ygb5e8)m53a05m0v7(k$f2*oo34=j#5r_'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+#SECRET_KEY = 'django-insecure-gqz)v*=+2^^le&$j2ygb5e8)m53a05m0v7(k$f2*oo34=j#5r_'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'yung00420')
+DEBUG = bool(int(os.environ.get('DEBUG', 0))) # 0: False, 1: True
+ALLOWED_HOSTS = ['*'] # ec2-123-123-123
 
 
 # Application definition
@@ -40,15 +38,30 @@ DJANGO_SYSTEM_APPS = [
     'core'
 ]
 CUSTOM_USER_APPS = [
+    'daphne',
     'users.apps.UsersConfig',
     'videos.apps.VideosConfig',
     'comments.apps.CommentsConfig',
     'subscriptions.apps.SubscriptionsConfig',
+    'reactions.apps.ReactionsConfig',
     'rest_framework',
-    'drf_spectacular'
+    'drf_spectacular',
+    'channels',
+    'chat.apps.ChatConfig'
 ]
 
 INSTALLED_APPS = CUSTOM_USER_APPS + DJANGO_SYSTEM_APPS
+
+# Channels 를 사용하기 위한 설정
+ASGI_APPLICATION = 'app.route.application' # Socket (비동기 처리)
+# => FAST API (비동기) + (동기)
+
+WSGI_APPLICATION = 'app.wsgi.application' # HTTP Base - REST API (동기 처리)
+
+# 동기와 비동기
+# 스타벅스에 들어갔어요
+# 직원이 1명 (동기)
+# 직원이 2명 (비동기)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'app.wsgi.application'
+
 
 
 # Database
@@ -142,4 +155,10 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND" :  "channels.layers.InMemoryChannelLayer"
+    }
 }

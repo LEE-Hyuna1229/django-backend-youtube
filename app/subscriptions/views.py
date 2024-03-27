@@ -12,6 +12,17 @@ from rest_framework import status
 # api/v1/subscribtion
 # [POST]: 구독하기
 class SubscriptionList(APIView):
+
+    def get(self, request):
+        subs = Subscription.objects.filter(subscriber=request.user)
+        # objects -> json
+        serializer = SubSerializer(subs, many=True)
+        return Response(serializer.data)
+
+
+
+
+
     def post(self, request):
         user_data = request.data # json -> object  (Serializer 통해 json을 django object로 만듬)
         serializer = SubSerializer(data=user_data)
