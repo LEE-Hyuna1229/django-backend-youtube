@@ -98,7 +98,7 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-import os
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -163,3 +163,9 @@ CHANNEL_LAYERS = {
         "BACKEND" :  "channels.layers.InMemoryChannelLayer"
     }
 }
+
+STATIC_URL = '/static/static'
+MEDIA_URL = '/static/media'
+
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'
